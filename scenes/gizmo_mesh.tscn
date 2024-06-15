@@ -1,0 +1,88 @@
+[gd_scene load_steps=9 format=3 uid="uid://bq70qnfuhxq6s"]
+
+[ext_resource type="Script" path="res://scripts/gizmo_mesh.gd" id="1_gu37o"]
+[ext_resource type="ArrayMesh" uid="uid://bt8skvt2aoobt" path="res://asset/linear_mesh.tres" id="2_rgjhd"]
+[ext_resource type="Material" uid="uid://jjhxoreav178" path="res://asset/material_red.tres" id="3_mf8eb"]
+[ext_resource type="Material" uid="uid://trw0qsfeniu" path="res://asset/material_green.tres" id="4_pnpso"]
+[ext_resource type="Material" uid="uid://o5kn5atbba2k" path="res://asset/material_blue.tres" id="5_ehdyv"]
+[ext_resource type="ArrayMesh" uid="uid://paxn806iqkco" path="res://asset/linear2_mesh.tres" id="6_u4kb2"]
+[ext_resource type="TorusMesh" uid="uid://bhe5tp7udwlcl" path="res://asset/angular_mesh.tres" id="7_bykt1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_doj2d"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+fixed_size = true
+
+[node name="GizmoMesh" type="Node3D"]
+script = ExtResource("1_gu37o")
+
+[node name="Linear" type="Node3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="X" type="MeshInstance3D" parent="Linear"]
+transform = Transform3D(-2.18557e-08, 1, 0, -0.5, -4.37114e-08, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = ExtResource("2_rgjhd")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("3_mf8eb")
+
+[node name="Y" type="MeshInstance3D" parent="Linear"]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = ExtResource("2_rgjhd")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("4_pnpso")
+
+[node name="Z" type="MeshInstance3D" parent="Linear"]
+transform = Transform3D(0.5, 0, 0, 0, -4.37114e-08, -0.5, 0, 1, -2.18557e-08, 0, 0, 0)
+mesh = ExtResource("2_rgjhd")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("5_ehdyv")
+
+[node name="YX" type="MeshInstance3D" parent="Linear"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+cast_shadow = 2
+mesh = ExtResource("6_u4kb2")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("5_ehdyv")
+
+[node name="ZY" type="MeshInstance3D" parent="Linear"]
+transform = Transform3D(-2.18557e-08, 0, -0.5, 0, 0.5, 0, 0.5, 0, -2.18557e-08, 0, 0, 0)
+cast_shadow = 2
+mesh = ExtResource("6_u4kb2")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("3_mf8eb")
+
+[node name="XZ" type="MeshInstance3D" parent="Linear"]
+transform = Transform3D(0.5, 0, 0, 0, -2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0)
+cast_shadow = 2
+mesh = ExtResource("6_u4kb2")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("4_pnpso")
+
+[node name="Angular" type="Node3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="X" type="MeshInstance3D" parent="Angular"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = ExtResource("7_bykt1")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("3_mf8eb")
+
+[node name="Y" type="MeshInstance3D" parent="Angular"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+mesh = ExtResource("7_bykt1")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("4_pnpso")
+
+[node name="Z" type="MeshInstance3D" parent="Angular"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = ExtResource("7_bykt1")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("5_ehdyv")
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+
+[node name="SelectedUp" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.5, 0, 0, 0, 0.25, 0, 0, 0)
+mesh = ExtResource("2_rgjhd")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_doj2d")

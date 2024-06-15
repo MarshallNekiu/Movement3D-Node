@@ -1,0 +1,100 @@
+[gd_scene load_steps=4 format=3 uid="uid://egadedjuub1b"]
+
+[ext_resource type="Script" path="res://scripts/camera.gd" id="1_f3jxl"]
+[ext_resource type="PackedScene" uid="uid://g3fdsjouew21" path="res://scenes/gizmo_control.tscn" id="2_wkous"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oefc8"]
+radius = 128.0
+
+[node name="Camera" type="Camera3D"]
+script = ExtResource("1_f3jxl")
+
+[node name="Canvas" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Area2D" parent="Canvas"]
+
+[node name="Linear" type="CollisionShape2D" parent="Canvas/Control"]
+position = Vector2(256, 768)
+shape = SubResource("CircleShape2D_oefc8")
+
+[node name="Mode" type="TabBar" parent="Canvas/Control/Linear"]
+offset_left = -192.0
+offset_top = 160.0
+offset_right = 61.0
+offset_bottom = 200.0
+tab_count = 3
+clip_tabs = false
+tab_0/title = "Local"
+tab_1/title = "Relative"
+tab_2/title = "Global"
+
+[node name="Axis" type="TabBar" parent="Canvas/Control/Linear"]
+offset_left = 96.0
+offset_top = 160.0
+offset_right = 166.0
+offset_bottom = 200.0
+tab_count = 2
+clip_tabs = false
+tab_0/title = "Z"
+tab_1/title = "XY"
+
+[node name="Auto" type="CheckButton" parent="Canvas/Control/Linear"]
+offset_left = -192.0
+offset_top = 224.0
+offset_right = -93.0
+offset_bottom = 255.0
+button_pressed = true
+text = "Follow"
+
+[node name="Angular" type="CollisionShape2D" parent="Canvas/Control"]
+position = Vector2(1664, 768)
+shape = SubResource("CircleShape2D_oefc8")
+
+[node name="Mode" type="TabBar" parent="Canvas/Control/Angular"]
+offset_left = -192.0
+offset_top = 160.0
+offset_right = 61.0
+offset_bottom = 200.0
+tab_count = 3
+clip_tabs = false
+tab_0/title = "Local"
+tab_1/title = "Relative"
+tab_2/title = "Global"
+
+[node name="Axis" type="TabBar" parent="Canvas/Control/Angular"]
+offset_left = 96.0
+offset_top = 160.0
+offset_right = 166.0
+offset_bottom = 200.0
+tab_count = 2
+clip_tabs = false
+tab_0/title = "Z"
+tab_1/title = "XY"
+
+[node name="Auto" type="CheckButton" parent="Canvas/Control/Angular"]
+offset_left = -192.0
+offset_top = 224.0
+offset_right = -93.0
+offset_bottom = 255.0
+button_pressed = true
+text = "Follow"
+
+[node name="Label" type="Label" parent="Canvas"]
+layout_direction = 3
+offset_left = 941.0
+offset_top = 32.0
+offset_right = 1376.0
+offset_bottom = 256.0
+scale = Vector2(3, 3)
+text = "123"
+
+[node name="Marker" type="Marker3D" parent="."]
+
+[node name="GizmoControl" parent="Marker" instance=ExtResource("2_wkous")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[connection signal="tree_entered" from="." to="." method="_on_tree_entered"]
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
+[connection signal="input_event" from="Canvas/Control" to="." method="_on_control_input_event"]
+[connection signal="toggled" from="Canvas/Control/Linear/Auto" to="." method="_on_linear_auto_toggled"]
+[connection signal="toggled" from="Canvas/Control/Angular/Auto" to="." method="_on_angular_auto_toggled"]

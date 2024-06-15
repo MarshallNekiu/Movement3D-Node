@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://eoh3v3adr0e2"]
+
+[ext_resource type="Script" path="res://scripts/demo.gd" id="1_u140p"]
+[ext_resource type="PackedScene" uid="uid://egadedjuub1b" path="res://scenes/camera.tscn" id="2_ctlyr"]
+[ext_resource type="PackedScene" uid="uid://co3c6hoxkwmtq" path="res://scenes/area_generator.tscn" id="3_2u3po"]
+[ext_resource type="PackedScene" uid="uid://bq70qnfuhxq6s" path="res://scenes/gizmo_mesh.tscn" id="4_bld8l"]
+
+[node name="Demo" type="Node3D"]
+script = ExtResource("1_u140p")
+
+[node name="Camera" parent="." instance=ExtResource("2_ctlyr")]
+current = true
+
+[node name="AreaGenerator" parent="." instance=ExtResource("3_2u3po")]
+
+[node name="GizmoMesh" parent="AreaGenerator" instance=ExtResource("4_bld8l")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 224.0
+offset_bottom = 224.0
+scale = Vector2(2, 2)
+
+[node name="Window" type="Window" parent="."]
+physics_object_picking = true
+position = Vector2i(0, 100)
+size = Vector2i(640, 360)
+
+[node name="Camera" parent="Window" instance=ExtResource("2_ctlyr")]
+sleep_position = Vector3(0, 20, 0)
+sleep_rotation = Vector3(-1, 0, 0)
+
+[node name="Window2" type="Window" parent="."]
+physics_object_picking = true
+position = Vector2i(750, 700)
+size = Vector2i(640, 360)
+
+[node name="Camera" parent="Window2" instance=ExtResource("2_ctlyr")]
+sleep_position = Vector3(30, 0, 0)
+sleep_rotation = Vector3(0, 1, 0)
+
+[connection signal="select" from="AreaGenerator" to="." method="_on_area_generator_select"]
+[connection signal="tree_entered" from="AreaGenerator/GizmoMesh" to="." method="_on_gizmo_mesh_tree_entered"]
