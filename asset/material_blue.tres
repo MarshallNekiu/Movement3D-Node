@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://o5kn5atbba2k"]
+
+[resource]
+resource_name = "material_blue"
+albedo_color = Color(0.5, 0.5, 0.5, 1)
+emission_enabled = true
+emission = Color(0, 0, 1, 1)
+backlight = Color(1, 1, 1, 1)
+fixed_size = true
