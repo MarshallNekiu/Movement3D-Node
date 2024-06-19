@@ -1,4 +1,9 @@
-[gd_resource type="ArrayMesh" format=3 uid="uid://bt8skvt2aoobt"]
+[gd_resource type="ArrayMesh" load_steps=2 format=3 uid="uid://bt8skvt2aoobt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dbrim"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+fixed_size = true
 
 [resource]
 _surfaces = [{
@@ -7,6 +12,7 @@ _surfaces = [{
 "format": 34359742487,
 "index_count": 36,
 "index_data": PackedByteArray(0, 0, 2, 0, 4, 0, 2, 0, 6, 0, 4, 0, 1, 0, 3, 0, 5, 0, 3, 0, 7, 0, 5, 0, 8, 0, 10, 0, 12, 0, 10, 0, 14, 0, 12, 0, 9, 0, 11, 0, 13, 0, 11, 0, 15, 0, 13, 0, 16, 0, 18, 0, 20, 0, 18, 0, 22, 0, 20, 0, 17, 0, 19, 0, 21, 0, 19, 0, 23, 0, 21, 0),
+"material": SubResource("StandardMaterial3D_dbrim"),
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 24,
