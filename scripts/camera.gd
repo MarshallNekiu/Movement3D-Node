@@ -1,24 +1,56 @@
+class_name FocusCamera3D
 extends Camera3D
 
 enum STATE{SLEEP, LOCAL_Z, LOCAL_XY, RELATIVE_Z, RELATIVE_XY, GLOBAL_Z, GLOBAL_XY}
 
 @export_group("Linear")
-@export var linear_state := STATE.SLEEP
+@export var linear_state := STATE.SLEEP:
+	set(x):
+		linear_state = x
+		if x:
+			$Canvas/Control/Linear/Mode.current_tab = [0, 0, 1, 1, 2, 2][x - 1]
+			$Canvas/Control/Linear/Axis.current_tab = [0, 1, 0, 1, 0, 1][x - 1]
 @export var linear_direction := Vector2.ZERO
 @export var linear_velocity := 5.0
+@export_range(0.0, 1.0)
+var linear_smooth := 0.05
 @export var linear_boost := 1.0
 @export var linear_booster := 0.005
 @export var linear_limit := 250.0
 @export_group("Angular")
-@export var angular_state := STATE.SLEEP
+@export var angular_state := STATE.SLEEP:
+	set(x):
+		angular_state = x
+		if x:
+			$Canvas/Control/Angular/Mode.current_tab = [0, 0, 1, 1, 2, 2][x - 1]
+			$Canvas/Control/Angular/Axis.current_tab = [0, 1, 0, 1, 0, 1][x - 1]
 @export var angular_directiom := Vector2.ZERO
 @export var angular_velocity := 3.0
+@export_range(0.0, 1.0)
+var angular_smooth := 0.01
 @export_category("Relative")
 @export var focus: Node3D
-@export var follow_position := true
-@export var sleep_position := Vector3(3, 2, 10)
-@export var follow_rotation := true
-@export var sleep_rotation := Vector3.ZERO
+@export var follow_position := true:
+	set(x):
+		follow_position = x
+		$Canvas/Control/Linear/Sleep/Auto.set_pressed_no_signal(x)
+@export var sleep_position := Vector3(3, 2, 10):
+	set(x):
+		sleep_position = x
+		$Canvas/Control/Linear/Sleep/X.set_value_no_signal(x.x)
+		$Canvas/Control/Linear/Sleep/Y.set_value_no_signal(x.y)
+		$Canvas/Control/Linear/Sleep/Z.set_value_no_signal(x.z)
+@export var follow_rotation := true:
+	set(x):
+		follow_rotation = x
+		$Canvas/Control/Angular/Sleep/Auto.set_pressed_no_signal(x)
+@export var sleep_rotation := Vector4(0, 1, 0, 0):
+	set(x):
+		sleep_rotation = x
+		$Canvas/Control/Angular/Sleep/X.set_value_no_signal(sleep_rotation.x)
+		$Canvas/Control/Angular/Sleep/Y.set_value_no_signal(sleep_rotation.y)
+		$Canvas/Control/Angular/Sleep/Z.set_value_no_signal(sleep_rotation.z)
+		$Canvas/Control/Angular/Sleep/Angle.set_value_no_signal(sleep_rotation.w)
 
 var canvas_scale := Vector2.ONE
 var gizmo: Node3D:
@@ -70,11 +102,13 @@ func _process(delta: float) -> void:
 	if is_instance_valid(focus):
 		if follow_position:
 			var target_gp := focus.global_position + sleep_position
-			global_position = global_position.lerp(target_gp, 0.01 * linear_velocity)
+			global_position = global_position.lerp(target_gp, linear_smooth)
 		if follow_rotation:
-			var target_q := Quaternion(focus.global_position.direction_to(focus.global_position + sleep_rotation).normalized(), deg_to_rad(90))
-			quaternion = quaternion.slerp(target_q, 0.01 * angular_velocity)
-		$Marker.look_at(focus.global_position)
+			var a := Vector3(sleep_rotation.x, sleep_rotation.y, sleep_rotation.z)
+			if a:
+				var target_q := Quaternion(a.normalized(), deg_to_rad(sleep_rotation.w))
+				quaternion = quaternion.slerp(target_q, angular_smooth)
+		$Marker/GizmoControl.global_position = global_position + global_position.direction_to(focus.global_position)
 		$Marker/GizmoControl.global_rotation = Vector3.ZERO
 	
 	debug([str("gpos/grot", Vector3i(global_position), Vector3i(global_rotation_degrees)),
@@ -102,9 +136,9 @@ func linear_local_xy(direction: Vector2, delta: float) -> void:
 func linear_relative_z(direction: Vector2, delta: float) -> void:
 	if is_instance_valid(focus):
 		global_transform.origin = focus.global_transform.origin +\
-		(global_transform.origin - focus.global_transform.origin).rotated(Vector3.FORWARD, delta * linear_velocity)
+		(global_transform.origin - focus.global_transform.origin).rotated(Vector3.FORWARD, delta * direction.x * linear_velocity)
 		if $Canvas/Control/Angular/Mode.current_tab == 1:
-			global_rotate(Vector3.FORWARD, delta * linear_velocity)
+			global_rotate(Vector3.FORWARD, delta * direction.x * linear_velocity)
 
 
 func linear_relative_xy(direction: Vector2, delta: float) -> void:
@@ -116,7 +150,7 @@ func linear_relative_xy(direction: Vector2, delta: float) -> void:
 
 
 func linear_global_z(direction: Vector2, delta: float) -> void:
-	global_translate((Vector3.BACK * direction.y) * delta * linear_velocity * linear_boost)
+	global_translate(Vector3.BACK * direction.y * delta * linear_velocity * linear_boost)
 
 
 func linear_global_xy(direction: Vector2, delta: float) -> void:
@@ -157,10 +191,12 @@ func update_canvas():
 
 func _on_tree_exiting() -> void:
 	get_viewport().size_changed.disconnect(update_canvas)
+	Menu.camera.erase(self)
 
 
 func _on_tree_entered() -> void:
 	get_viewport().size_changed.connect(update_canvas)
+	Menu.camera.append(self)
 
 
 func _on_linear_auto_toggled(toggled_on: bool) -> void:
@@ -169,3 +205,14 @@ func _on_linear_auto_toggled(toggled_on: bool) -> void:
 
 func _on_angular_auto_toggled(toggled_on: bool) -> void:
 	follow_rotation = toggled_on
+
+
+func _on_linear_sleep_value_changed(value: float) -> void:
+	sleep_position = Vector3($Canvas/Control/Linear/Sleep/X.value, $Canvas/Control/Linear/Sleep/Y.value, $Canvas/Control/Linear/Sleep/Z.value)
+
+
+func _on_angular_value_changed(value: float) -> void:
+	sleep_rotation = Vector4(($Canvas/Control/Angular/Sleep/X.value),
+	($Canvas/Control/Angular/Sleep/Y.value),
+	($Canvas/Control/Angular/Sleep/Z.value),
+	($Canvas/Control/Angular/Sleep/Angle.value))

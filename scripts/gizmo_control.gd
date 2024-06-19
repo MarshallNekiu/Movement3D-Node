@@ -1,3 +1,4 @@
+class_name GizmoControl
 extends Node3D
 
 enum INPUT_MODE{SLEEP, LINEAR, ANGULAR, LIN_ANG, ANG_LIN}
@@ -94,14 +95,17 @@ func linear_xz(delta: float):
 
 
 func angular_x(delta: float):
-	gizmo.get_parent().global_rotate(Vector3(0, 0, -angular_direction.x).normalized(), delta * angular_velocity)
+	if angular_direction.x:
+		gizmo.get_parent().global_rotate(Vector3(0, 0, -angular_direction.x).normalized(), delta * angular_velocity)
 
 
 func angular_y(delta: float):
+	if angular_direction.x:
 		gizmo.get_parent().global_rotate(Vector3(0, angular_direction.x, 0).normalized(), delta * angular_velocity)
 
 
 func angular_z(delta: float):
+	if angular_direction.y:
 		gizmo.get_parent().global_rotate(Vector3(angular_direction.y, 0, 0).normalized(), delta * angular_velocity)
 
 

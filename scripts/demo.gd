@@ -5,8 +5,7 @@ extends Node3D
 
 func _ready() -> void:
 	$Camera.gizmo = gizmo
-	$Window/Camera.gizmo = gizmo
-	$Window2/Camera.gizmo = gizmo
+	$SVC/SV/Camera.gizmo = gizmo
 
 
 func _process(delta: float) -> void:
@@ -21,5 +20,9 @@ func _on_area_generator_select(node: Node3D) -> void:
 func _on_gizmo_mesh_tree_entered() -> void:
 	if is_instance_valid(gizmo):
 		$Camera.focus = gizmo.get_parent()
-		$Window/Camera.focus = gizmo.get_parent()
-		$Window2/Camera.focus = gizmo.get_parent()
+		$SVC/SV/Camera.focus = gizmo.get_parent()
+
+
+func _on_button_pressed() -> void:
+	if not has_node("Menu"):
+		add_child(preload("res://scenes/setting.tscn").instantiate(), true, Node.INTERNAL_MODE_BACK)
