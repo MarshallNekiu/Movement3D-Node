@@ -1,0 +1,406 @@
+[gd_scene load_steps=3 format=3 uid="uid://dc0sjwl0c3605"]
+
+[ext_resource type="Script" path="res://scripts/setting.gd" id="1_h3aw7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ihc2"]
+bg_color = Color(0.250298, 0.247684, 0.329367, 1)
+
+[node name="Menu" type="Window"]
+title = "Menu"
+initial_position = 1
+size = Vector2i(800, 800)
+script = ExtResource("1_h3aw7")
+
+[node name="Scroll" type="ScrollContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2ihc2")
+
+[node name="VBox" type="VBoxContainer" parent="Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FCam3D" type="OptionButton" parent="Scroll/VBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+item_count = 1
+selected = 0
+popup/item_0/text = "root"
+popup/item_0/id = 0
+
+[node name="Viewport" type="TextureRect" parent="Scroll/VBox"]
+show_behind_parent = true
+layout_mode = 2
+expand_mode = 5
+
+[node name="S" type="HSeparator" parent="Scroll/VBox"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="Camera" type="VBoxContainer" parent="Scroll/VBox"]
+layout_mode = 2
+
+[node name="Title" type="Button" parent="Scroll/VBox/Camera"]
+layout_mode = 2
+text = "Camera"
+
+[node name="Property" type="VBoxContainer" parent="Scroll/VBox/Camera"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="CLinear" type="VBoxContainer" parent="Scroll/VBox/Camera/Property"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Scroll/VBox/Camera/Property/CLinear"]
+layout_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="Scroll/VBox/Camera/Property/CLinear/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="Mode" type="TabBar" parent="Scroll/VBox/Camera/Property/CLinear/VBox/HBox"]
+layout_mode = 2
+tab_count = 3
+clip_tabs = false
+tab_0/title = "Local"
+tab_1/title = "Relative"
+tab_2/title = "Global"
+
+[node name="Axis" type="TabBar" parent="Scroll/VBox/Camera/Property/CLinear/VBox/HBox"]
+layout_mode = 2
+tab_count = 2
+clip_tabs = false
+tab_0/title = "Z"
+tab_1/title = "XY"
+
+[node name="Sleep" type="HBoxContainer" parent="Scroll/VBox/Camera/Property/CLinear/VBox"]
+layout_mode = 2
+
+[node name="Auto" type="CheckButton" parent="Scroll/VBox/Camera/Property/CLinear/VBox/Sleep"]
+layout_mode = 2
+button_pressed = true
+text = "Follow"
+
+[node name="X" type="SpinBox" parent="Scroll/VBox/Camera/Property/CLinear/VBox/Sleep"]
+layout_mode = 2
+step = 0.001
+value = 3.0
+allow_greater = true
+allow_lesser = true
+prefix = "x:"
+custom_arrow_step = 1.0
+select_all_on_focus = true
+
+[node name="Y" type="SpinBox" parent="Scroll/VBox/Camera/Property/CLinear/VBox/Sleep"]
+layout_mode = 2
+step = 0.001
+value = 2.0
+allow_greater = true
+allow_lesser = true
+prefix = "y:"
+custom_arrow_step = 1.0
+select_all_on_focus = true
+
+[node name="Z" type="SpinBox" parent="Scroll/VBox/Camera/Property/CLinear/VBox/Sleep"]
+layout_mode = 2
+step = 0.001
+value = 10.0
+allow_greater = true
+allow_lesser = true
+prefix = "z:"
+custom_arrow_step = 1.0
+select_all_on_focus = true
+
+[node name="Velocity" type="HBoxContainer" parent="Scroll/VBox/Camera/Property/CLinear"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Scroll/VBox/Camera/Property/CLinear/Velocity"]
+layout_mode = 2
+text = "Linear velocity"
+
+[node name="SpinBox" type="SpinBox" parent="Scroll/VBox/Camera/Property/CLinear/Velocity"]
+layout_mode = 2
+step = 0.001
+value = 5.0
+allow_greater = true
+custom_arrow_step = 1.0
+select_all_on_focus = true
+
+[node name="Smooth" type="HBoxContainer" parent="Scroll/VBox/Camera/Property/CLinear"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Scroll/VBox/Camera/Property/CLinear/Smooth"]
+layout_mode = 2
+text = "Linear smooth"
+
+[node name="SpinBox" type="SpinBox" parent="Scroll/VBox/Camera/Property/CLinear/Smooth"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+value = 0.05
+select_all_on_focus = true
+
+[node name="Booster" type="HBoxContainer" parent="Scroll/VBox/Camera/Property/CLinear"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Scroll/VBox/Camera/Property/CLinear/Booster"]
+layout_mode = 2
+text = "Linear booster"
+
+[node name="SpinBox" type="SpinBox" parent="Scroll/VBox/Camera/Property/CLinear/Booster"]
+layout_mode = 2
+step = 0.001
+value = 0.005
+allow_greater = true
+select_all_on_focus = true
+
+[node name="Limit" type="HBoxContainer" parent="Scroll/VBox/Camera/Property/CLinear"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Scroll/VBox/Camera/Property/CLinear/Limit"]
+layout_mode = 2
+text = "Linear limit"
+
+[node name="SpinBox" type="SpinBox" parent="Scroll/VBox/Camera/Property/CLinear/Limit"]
+layout_mode = 2
+step = 0.001
+value = 100.0
+allow_greater = true
+custom_arrow_step = 1.0
+select_all_on_focus = true
+
+[node name="S" type="HSeparator" parent="Scroll/VBox/Camera/Property"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="CAngular" type="VBoxContainer" parent="Scroll/VBox/Camera/Property"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Scroll/VBox/Camera/Property/CAngular"]
+layout_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="Scroll/VBox/Camera/Property/CAngular/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="Mode" type="TabBar" parent="Scroll/VBox/Camera/Property/CAngular/VBox/HBox"]
+layout_mode = 2
+tab_count = 3
+clip_tabs = false
+tab_0/title = "Local"
+tab_1/title = "Relative"
+tab_2/title = "Global"
+
+[node name="Axis" type="TabBar" parent="Scroll/VBox/Camera/Property/CAngular/VBox/HBox"]
+layout_mode = 2
+tab_count = 2
+clip_tabs = false
+tab_0/title = "Z"
+tab_1/title = "XY"
+
+[node name="Sleep" type="HBoxContainer" parent="Scroll/VBox/Camera/Property/CAngular/VBox"]
+layout_mode = 2
+
+[node name="Auto" type="CheckButton" parent="Scroll/VBox/Camera/Property/CAngular/VBox/Sleep"]
+layout_mode = 2
+button_pressed = true
+text = "Follow"
+
+[node name="X" type="SpinBox" parent="Scroll/VBox/Camera/Property/CAngular/VBox/Sleep"]
+layout_mode = 2
+min_value = -360.0
+max_value = 360.0
+step = 0.001
+prefix = "x:"
+custom_arrow_step = 1.0
+select_all_on_focus = true
+
+[node name="Y" type="SpinBox" parent="Scroll/VBox/Camera/Property/CAngular/VBox/Sleep"]
+layout_mode = 2
+min_value = -360.0
+max_value = 360.0
+step = 0.001
+value = 1.0
+prefix = "y:"
+custom_arrow_step = 1.0
+select_all_on_focus = true
+
+[node name="Z" type="SpinBox" parent="Scroll/VBox/Camera/Property/CAngular/VBox/Sleep"]
+layout_mode = 2
+min_value = -360.0
+max_value = 360.0
+step = 0.001
+prefix = "z:"
+custom_arrow_step = 1.0
+select_all_on_focus = true
+
+[node name="Angle" type="SpinBox" parent="Scroll/VBox/Camera/Property/CAngular/VBox/Sleep"]
+layout_mode = 2
+min_value = -360.0
+max_value = 360.0
+step = 0.001
+suffix = "°"
+custom_arrow_step = 1.0
+select_all_on_focus = true
+
+[node name="Velocity" type="HBoxContainer" parent="Scroll/VBox/Camera/Property/CAngular"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Scroll/VBox/Camera/Property/CAngular/Velocity"]
+layout_mode = 2
+text = "Angular velocity"
+
+[node name="SpinBox" type="SpinBox" parent="Scroll/VBox/Camera/Property/CAngular/Velocity"]
+layout_mode = 2
+step = 0.001
+value = 3.0
+allow_greater = true
+custom_arrow_step = 1.0
+select_all_on_focus = true
+
+[node name="Smooth" type="HBoxContainer" parent="Scroll/VBox/Camera/Property/CAngular"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Scroll/VBox/Camera/Property/CAngular/Smooth"]
+layout_mode = 2
+text = "Angular smooth"
+
+[node name="SpinBox" type="SpinBox" parent="Scroll/VBox/Camera/Property/CAngular/Smooth"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+value = 0.01
+select_all_on_focus = true
+
+[node name="S" type="HSeparator" parent="Scroll/VBox/Camera"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="Gizmo" type="VBoxContainer" parent="Scroll/VBox"]
+layout_mode = 2
+
+[node name="Title" type="Button" parent="Scroll/VBox/Gizmo"]
+layout_mode = 2
+text = "Gizmo"
+
+[node name="Property" type="VBoxContainer" parent="Scroll/VBox/Gizmo"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="GLinear" type="VBoxContainer" parent="Scroll/VBox/Gizmo/Property"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Velocity" type="HBoxContainer" parent="Scroll/VBox/Gizmo/Property/GLinear"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Scroll/VBox/Gizmo/Property/GLinear/Velocity"]
+layout_mode = 2
+text = "Linear velocity"
+
+[node name="SpinBox" type="SpinBox" parent="Scroll/VBox/Gizmo/Property/GLinear/Velocity"]
+layout_mode = 2
+step = 0.001
+value = 5.0
+allow_greater = true
+custom_arrow_step = 1.0
+select_all_on_focus = true
+
+[node name="DScaler" type="HBoxContainer" parent="Scroll/VBox/Gizmo/Property/GLinear"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Scroll/VBox/Gizmo/Property/GLinear/DScaler"]
+layout_mode = 2
+text = "Distance scaler"
+
+[node name="SpinBox" type="SpinBox" parent="Scroll/VBox/Gizmo/Property/GLinear/DScaler"]
+layout_mode = 2
+step = 0.001
+value = 0.05
+allow_greater = true
+allow_lesser = true
+select_all_on_focus = true
+
+[node name="DSLimit" type="HBoxContainer" parent="Scroll/VBox/Gizmo/Property/GLinear"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Scroll/VBox/Gizmo/Property/GLinear/DSLimit"]
+layout_mode = 2
+text = "D.Scaler limit"
+
+[node name="SpinBox" type="SpinBox" parent="Scroll/VBox/Gizmo/Property/GLinear/DSLimit"]
+layout_mode = 2
+step = 0.001
+value = 100.0
+allow_greater = true
+select_all_on_focus = true
+
+[node name="S" type="HSeparator" parent="Scroll/VBox/Gizmo/Property"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="GAngular" type="VBoxContainer" parent="Scroll/VBox/Gizmo/Property"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Velocity" type="HBoxContainer" parent="Scroll/VBox/Gizmo/Property/GAngular"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Scroll/VBox/Gizmo/Property/GAngular/Velocity"]
+layout_mode = 2
+text = "Angular velocity"
+
+[node name="SpinBox" type="SpinBox" parent="Scroll/VBox/Gizmo/Property/GAngular/Velocity"]
+layout_mode = 2
+step = 0.001
+value = 3.0
+allow_greater = true
+custom_arrow_step = 1.0
+select_all_on_focus = true
+
+[node name="S" type="HSeparator" parent="Scroll/VBox/Gizmo"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="window_input" from="." to="." method="_on_window_input"]
+[connection signal="item_selected" from="Scroll/VBox/FCam3D" to="." method="_on_viewport_selected"]
+[connection signal="tab_selected" from="Scroll/VBox/Camera/Property/CLinear/VBox/HBox/Mode" to="." method="_on_camera_property_changed" binds= ["linear_state"]]
+[connection signal="tab_selected" from="Scroll/VBox/Camera/Property/CLinear/VBox/HBox/Axis" to="." method="_on_camera_property_changed" binds= ["linear_state"]]
+[connection signal="toggled" from="Scroll/VBox/Camera/Property/CLinear/VBox/Sleep/Auto" to="." method="_on_camera_property_changed" binds= ["follow_position"]]
+[connection signal="value_changed" from="Scroll/VBox/Camera/Property/CLinear/VBox/Sleep/X" to="." method="_on_camera_property_changed" binds= ["sleep_position"]]
+[connection signal="value_changed" from="Scroll/VBox/Camera/Property/CLinear/VBox/Sleep/Y" to="." method="_on_camera_property_changed" binds= ["sleep_position"]]
+[connection signal="value_changed" from="Scroll/VBox/Camera/Property/CLinear/VBox/Sleep/Z" to="." method="_on_camera_property_changed" binds= ["sleep_position"]]
+[connection signal="value_changed" from="Scroll/VBox/Camera/Property/CLinear/Velocity/SpinBox" to="." method="_on_camera_property_changed" binds= ["linear_velocity"]]
+[connection signal="value_changed" from="Scroll/VBox/Camera/Property/CLinear/Smooth/SpinBox" to="." method="_on_camera_property_changed" binds= ["linear_smooth"]]
+[connection signal="value_changed" from="Scroll/VBox/Camera/Property/CLinear/Booster/SpinBox" to="." method="_on_camera_property_changed" binds= ["linear_booster"]]
+[connection signal="value_changed" from="Scroll/VBox/Camera/Property/CLinear/Limit/SpinBox" to="." method="_on_camera_property_changed" binds= ["linear_limit"]]
+[connection signal="tab_selected" from="Scroll/VBox/Camera/Property/CAngular/VBox/HBox/Mode" to="." method="_on_camera_property_changed" binds= ["angular_state"]]
+[connection signal="tab_selected" from="Scroll/VBox/Camera/Property/CAngular/VBox/HBox/Axis" to="." method="_on_camera_property_changed" binds= ["angular_state"]]
+[connection signal="toggled" from="Scroll/VBox/Camera/Property/CAngular/VBox/Sleep/Auto" to="." method="_on_camera_property_changed" binds= ["follow_rotation"]]
+[connection signal="value_changed" from="Scroll/VBox/Camera/Property/CAngular/VBox/Sleep/X" to="." method="_on_camera_property_changed" binds= ["sleep_rotation"]]
+[connection signal="value_changed" from="Scroll/VBox/Camera/Property/CAngular/VBox/Sleep/Y" to="." method="_on_camera_property_changed" binds= ["sleep_rotation"]]
+[connection signal="value_changed" from="Scroll/VBox/Camera/Property/CAngular/VBox/Sleep/Z" to="." method="_on_camera_property_changed" binds= ["sleep_rotation"]]
+[connection signal="value_changed" from="Scroll/VBox/Camera/Property/CAngular/VBox/Sleep/Angle" to="." method="_on_camera_property_changed" binds= ["sleep_rotation"]]
+[connection signal="value_changed" from="Scroll/VBox/Camera/Property/CAngular/Velocity/SpinBox" to="." method="_on_camera_property_changed" binds= ["angular_velocity"]]
+[connection signal="value_changed" from="Scroll/VBox/Camera/Property/CAngular/Smooth/SpinBox" to="." method="_on_camera_property_changed" binds= ["angular_smooth"]]
+[connection signal="value_changed" from="Scroll/VBox/Gizmo/Property/GLinear/Velocity/SpinBox" to="." method="_on_gizmo_property_changed" binds= ["linear_velocity"]]
+[connection signal="value_changed" from="Scroll/VBox/Gizmo/Property/GLinear/DScaler/SpinBox" to="." method="_on_gizmo_property_changed" binds= ["d_scaler"]]
+[connection signal="value_changed" from="Scroll/VBox/Gizmo/Property/GLinear/DSLimit/SpinBox" to="." method="_on_gizmo_property_changed" binds= ["ds_limit"]]
+[connection signal="value_changed" from="Scroll/VBox/Gizmo/Property/GAngular/Velocity/SpinBox" to="." method="_on_gizmo_property_changed" binds= ["angular_velocity"]]

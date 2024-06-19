@@ -24,23 +24,27 @@ offset_right = 224.0
 offset_bottom = 224.0
 scale = Vector2(2, 2)
 
-[node name="Window" type="Window" parent="."]
-physics_object_picking = true
-position = Vector2i(0, 100)
-size = Vector2i(640, 360)
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_right = 64.0
+offset_bottom = 32.0
+text = "Menu"
 
-[node name="Camera" parent="Window" instance=ExtResource("2_ctlyr")]
+[node name="SVC" type="SubViewportContainer" parent="."]
+offset_left = 66.0
+offset_top = 62.0
+offset_right = 706.0
+offset_bottom = 422.0
+
+[node name="SV" type="SubViewport" parent="SVC"]
+handle_input_locally = false
+physics_object_picking = true
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="Camera" parent="SVC/SV" instance=ExtResource("2_ctlyr")]
 sleep_position = Vector3(0, 20, 0)
-sleep_rotation = Vector3(-1, 0, 0)
-
-[node name="Window2" type="Window" parent="."]
-physics_object_picking = true
-position = Vector2i(750, 700)
-size = Vector2i(640, 360)
-
-[node name="Camera" parent="Window2" instance=ExtResource("2_ctlyr")]
-sleep_position = Vector3(30, 0, 0)
-sleep_rotation = Vector3(0, 1, 0)
+sleep_rotation = Vector4(-1, 0, 0, 90)
 
 [connection signal="select" from="AreaGenerator" to="." method="_on_area_generator_select"]
 [connection signal="tree_entered" from="AreaGenerator/GizmoMesh" to="." method="_on_gizmo_mesh_tree_entered"]
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
